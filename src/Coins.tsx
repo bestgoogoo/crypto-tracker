@@ -54,8 +54,8 @@ function Coins() {
   useEffect(() => {
     (async () => {
       const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const data = await response.json();
-      setCoins(data.slice(0, 50));
+      const json = await response.json();
+      setCoins(json.slice(0, 50));
     })();
     // (async function a() => {})(a()) = (async () => {})()
     setLoading(false);
@@ -71,7 +71,9 @@ function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={coin.id}>{coin.name} &rarr;</Link>
+              <Link to={coin.id} state={{ id: coin.id, name: coin.name }}>
+                {coin.name}
+              </Link>
             </Coin>
           ))}
         </CoinList>
