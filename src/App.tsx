@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { mainTheme } from "./theme";
+import { theme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -61,12 +61,13 @@ body {
   color:${(props) => props.theme.textColor}
 }
 a {
+  color: inherit;
   text-decoration:none;
 }`;
 
 function App() {
   return (
-    <ThemeProvider theme={mainTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <RouterProvider router={router} />
     </ThemeProvider>
