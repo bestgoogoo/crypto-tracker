@@ -68,10 +68,10 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-type RouteState = {
+export type RouteState = {
   state: {
     id: string;
-    name: string;
+    name?: string;
   };
 };
 type RouteParams = {
@@ -135,18 +135,17 @@ interface PriceData {
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation() as RouteState;
-  const chartMatch = useMatch(`/${coinId}/chart`);
-  const priceMatch = useMatch(`/${coinId}/price`);
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>({
-    queryKey: ["info"],
+    queryKey: ["info", coinId],
     queryFn: () => fetchCoinInfo(coinId),
   });
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>({
-    queryKey: ["tickers"],
+    queryKey: ["tickers", coinId],
     queryFn: () => fetchCoinTickers(coinId),
   });
-  console.log(infoData);
   const loading = infoLoading || tickersLoading;
+  const chartMatch = useMatch(`/${coinId}/chart`);
+  const priceMatch = useMatch(`/${coinId}/price`);
   return (
     <h1>
       <Container>
